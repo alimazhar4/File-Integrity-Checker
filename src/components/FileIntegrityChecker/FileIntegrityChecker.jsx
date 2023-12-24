@@ -2,6 +2,8 @@
 import { useState, useRef } from "react";
 import { SHA3 } from "crypto-js";
 
+import HashCompare from "./HashCompare";
+
 import { FaFileArrowUp } from "react-icons/fa6";
 import { CgSpinner } from "react-icons/cg";
 
@@ -67,7 +69,7 @@ const FileIntegrityChecker = () => {
 
   return (
     <div>
-      <div className="flex flex-row mt-20">
+      <div className="flex flex-row mt-10">
         <div className="w-[50%] px-6 flex flex-col">
           <input
             type="file"
@@ -101,7 +103,9 @@ const FileIntegrityChecker = () => {
                       color="#000000"
                       className="animate-spin"
                     />
-                    <span className="ml-2">Calculating, please wait ...</span>
+                    <span className="ml-2">
+                      File Uploading, Please Wait ...
+                    </span>
                   </div>
                 )}
               </p>
@@ -141,13 +145,35 @@ const FileIntegrityChecker = () => {
                       color="#000000"
                       className="animate-spin"
                     />
-                    <span className="ml-2">Calculating, please wait ...</span>
+                    <span className="ml-2">
+                      File Uploading, Please Wait ...
+                    </span>
                   </div>
                 )}
               </p>
             </div>
           )}
         </div>
+      </div>
+      <div className="mt-20 border-t border-t-[#008CFF]">
+        {!file1 || !file2 ? (
+          <p className="font-medium px-[20%] text-xl text-center mt-10">
+            Please Upload Both of the Files To Check Integrity
+          </p>
+        ) : sha3Value1 && sha3Value2 ? (
+          <div>
+            <HashCompare sha3Value1={sha3Value1} sha3Value2={sha3Value2} />
+          </div>
+        ) : (
+          <div className="flex">
+            <div className="flex flex-col items-center mx-auto mt-6">
+              <CgSpinner size={40} color="#000000" className="animate-spin" />
+              <span className="mt-4 font-medium px-[20%] text-xl text-center">
+                Please Wait for Both SHA3 Hash Values to be Calculated
+              </span>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

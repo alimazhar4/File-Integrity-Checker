@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import FileIntegrityChecker from "@/components/FileUploader/FileIntegrityChecker";
+import FileIntegrityChecker from "@/components/FileIntegrityChecker/FileIntegrityChecker";
 
 export default function Home() {
   return (
