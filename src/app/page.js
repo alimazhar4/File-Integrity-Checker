@@ -9,7 +9,7 @@ export default function Home() {
         File Integrity Checker
       </h1>
       <p className="font-medium px-[20%] text-xl text-center mt-4">
-        Check the integrity of two file.
+        Check the integrity between two files
         <br />
         Just upload both of them below and easily compare their SHA3 hash values
       </p>

@@ -13,9 +13,16 @@ const FileIntegrityChecker = () => {
 
   const [file1, setFile1] = useState(null);
   const [sha3Value1, setSha3Value1] = useState(null);
+  const [file1Size, setFile1Size] = useState(null);
 
   const [file2, setFile2] = useState(null);
   const [sha3Value2, setSha3Value2] = useState(null);
+  const [file2Size, setFile2Size] = useState(null);
+
+  const formatFileSize = (sizeInBytes) => {
+    const kilobytes = sizeInBytes / 1024;
+    return kilobytes.toFixed(2) + " KB";
+  };
 
   const handleFileChange1 = (e) => {
     const selectedFile = e.target.files[0];
@@ -28,6 +35,7 @@ const FileIntegrityChecker = () => {
         const fileContent = event.target.result;
         const sha3 = SHA3(fileContent, { outputLength: 256 }).toString();
         setSha3Value1(sha3);
+        setFile1Size(formatFileSize(selectedFile.size));
       };
       reader.readAsBinaryString(selectedFile);
     }
@@ -44,6 +52,7 @@ const FileIntegrityChecker = () => {
         const fileContent = event.target.result;
         const sha3 = SHA3(fileContent, { outputLength: 256 }).toString();
         setSha3Value2(sha3);
+        setFile2Size(formatFileSize(selectedFile.size));
       };
       reader.readAsBinaryString(selectedFile);
     }
@@ -52,6 +61,7 @@ const FileIntegrityChecker = () => {
   const handleClear1 = () => {
     setFile1(null);
     setSha3Value1(null);
+    setFile1Size(null);
 
     if (file1InputRef.current) {
       file1InputRef.current.value = "";
@@ -61,6 +71,7 @@ const FileIntegrityChecker = () => {
   const handleClear2 = () => {
     setFile2(null);
     setSha3Value2(null);
+    setFile2Size(null);
 
     if (file2InputRef.current) {
       file2InputRef.current.value = "";
@@ -70,7 +81,7 @@ const FileIntegrityChecker = () => {
   return (
     <div>
       <div className="flex flex-row mt-12">
-        <div className="w-[50%] px-6 flex flex-col">
+        <div className="w-[50%] px-12 flex flex-col">
           <input
             type="file"
             ref={file1InputRef}
@@ -87,10 +98,15 @@ const FileIntegrityChecker = () => {
           </button>
           {file1 && (
             <div className="mt-6">
-              <h3 className="font-extrabold text-2xl">Upload Details</h3>
+              <h3 className="font-extrabold text-2xl text-center my-2">
+                Upload Details
+              </h3>
 
               <p className="text-lg">
                 <b>File Name:</b> {file1.name}
+              </p>
+              <p className="text-lg">
+                <b>File Size:</b> {file1Size}
               </p>
               <p className="text-lg">
                 <b>Hash Value:</b>
@@ -114,7 +130,7 @@ const FileIntegrityChecker = () => {
             </div>
           )}
         </div>
-        <div className="w-[50%] px-6 flex flex-col">
+        <div className="w-[50%] px-12 flex flex-col">
           <input
             type="file"
             ref={file2InputRef}
@@ -131,9 +147,14 @@ const FileIntegrityChecker = () => {
           </button>
           {file2 && (
             <div className="mt-6">
-              <h3 className="font-extrabold text-2xl">Upload Details</h3>
+              <h3 className="font-extrabold text-2xl text-center my-2">
+                Upload Details
+              </h3>
               <p className="text-lg">
                 <b>File Name:</b> {file2.name}
+              </p>
+              <p className="text-lg">
+                <b>File Size:</b> {file2Size}
               </p>
               <p className="text-lg">
                 <b>Hash Value:</b>
@@ -158,9 +179,9 @@ const FileIntegrityChecker = () => {
           )}
         </div>
       </div>
-      <div className="mt-20 border-t border-t-[#008CFF]">
+      <div className="mt-10">
         {!file1 || !file2 ? (
-          <p className="font-medium px-[20%] text-xl text-center mt-10">
+          <p className="font-medium px-[20%] text-xl text-center mt-20">
             Please Upload Both of the Files To Check Integrity
           </p>
         ) : sha3Value1 && sha3Value2 ? (
@@ -169,7 +190,7 @@ const FileIntegrityChecker = () => {
           </div>
         ) : (
           <div className="flex">
-            <div className="flex flex-col items-center mx-auto mt-6">
+            <div className="flex flex-col items-center mx-auto mt-20">
               <CgSpinner size={40} color="#000000" className="animate-spin" />
               <span className="mt-4 font-medium px-[20%] text-xl text-center">
                 Please Wait for Both SHA3 Hash Values to be Calculated

@@ -12,7 +12,7 @@ const HashCompare = ({ sha3Value1, sha3Value2 }) => {
             <FaCheckCircle size={200} color="#008000" />
             <div className="ml-6">
               <p className="text-[#008000] text-2xl font-bold">
-                Both Files Are Same!
+                File Content Matched!
               </p>
               <p className="text-[#008000] text-lg">
                 The integrity between both of the files is confirmed as their
@@ -27,7 +27,7 @@ const HashCompare = ({ sha3Value1, sha3Value2 }) => {
             <FaCircleXmark size={200} color="#ff0000" />
             <div className="ml-6">
               <p className="text-[#ff0000] text-2xl font-bold">
-                Both Files are Different!
+                File Content Different!
               </p>
               <p className="text-[#ff0000] text-lg">
                 The integrity between these both files can&apos;t be confirmed
