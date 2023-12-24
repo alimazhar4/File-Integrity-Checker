@@ -1,6 +1,7 @@
 "use client";
 import { useState, useRef } from "react";
 import { SHA3 } from "crypto-js";
+import { useRouter } from "next/navigation";
 
 import HashCompare from "./HashCompare";
 
@@ -8,6 +9,8 @@ import { FaFileArrowUp } from "react-icons/fa6";
 import { CgSpinner } from "react-icons/cg";
 
 const FileIntegrityChecker = () => {
+  const router = useRouter();
+
   const file1InputRef = useRef(null);
   const file2InputRef = useRef(null);
 
@@ -80,8 +83,8 @@ const FileIntegrityChecker = () => {
 
   return (
     <div>
-      <div className="flex flex-row mt-12">
-        <div className="w-[50%] px-12 flex flex-col">
+      <div className="flex flex-col md:flex-row mt-6">
+        <div className="w-full md:w-[50%] px-12 flex flex-col border-b-2 border-b-[#008CFF] md:border-b-0 md:border-r-2 md:border-r-[#008CFF] py-12 md:py-6">
           <input
             type="file"
             ref={file1InputRef}
@@ -113,7 +116,7 @@ const FileIntegrityChecker = () => {
               </p>
               <p className="text-md">
                 {sha3Value1 ? (
-                  <p className="hash-output text-sm">{sha3Value1}</p>
+                  <p className="hash-output break-words">{sha3Value1}</p>
                 ) : (
                   <div className="flex flex-row items-center">
                     <CgSpinner
@@ -130,7 +133,7 @@ const FileIntegrityChecker = () => {
             </div>
           )}
         </div>
-        <div className="w-[50%] px-12 flex flex-col">
+        <div className="w-full md:w-[50%] px-12 flex flex-col mt-6 md:mt-0 border-b-2 border-b-[#008CFF] md:border-b-0 pt-6 pb-12 md:pb-6">
           <input
             type="file"
             ref={file2InputRef}
@@ -161,7 +164,7 @@ const FileIntegrityChecker = () => {
               </p>
               <p className="text-md">
                 {sha3Value2 ? (
-                  <p className="hash-output text-sm">{sha3Value2}</p>
+                  <p className="hash-output break-words">{sha3Value2}</p>
                 ) : (
                   <div className="flex flex-row items-center">
                     <CgSpinner
@@ -181,22 +184,31 @@ const FileIntegrityChecker = () => {
       </div>
       <div className="mt-10">
         {!file1 || !file2 ? (
-          <p className="font-medium px-[20%] text-xl text-center mt-20">
+          <p className="font-medium px-[20%] text-xl text-center mt-20 mb-10">
             Please Upload Both of the Files To Check Integrity
           </p>
-        ) : sha3Value1 && sha3Value2 ? (
-          <div>
-            <HashCompare sha3Value1={sha3Value1} sha3Value2={sha3Value2} />
-          </div>
         ) : (
-          <div className="flex">
-            <div className="flex flex-col items-center mx-auto mt-20">
-              <CgSpinner size={40} color="#000000" className="animate-spin" />
-              <span className="mt-4 font-medium px-[20%] text-xl text-center">
-                Please Wait for Both SHA3 Hash Values to be Calculated
-              </span>
-            </div>
-          </div>
+          <>
+            {sha3Value1 && sha3Value2 ? (
+              <div>
+                {router.push("#hashCompare")}
+                <HashCompare sha3Value1={sha3Value1} sha3Value2={sha3Value2} />
+              </div>
+            ) : (
+              <div className="flex">
+                <div className="flex flex-col items-center mx-auto mt-20">
+                  <CgSpinner
+                    size={40}
+                    color="#000000"
+                    className="animate-spin"
+                  />
+                  <span className="mt-4 font-medium px-[20%] text-xl text-center">
+                    Please Wait for Both SHA3 Hash Values to be Calculated
+                  </span>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>
