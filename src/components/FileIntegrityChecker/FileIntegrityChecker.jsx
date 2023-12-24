@@ -69,7 +69,7 @@ const FileIntegrityChecker = () => {
 
   return (
     <div>
-      <div className="flex flex-row mt-10">
+      <div className="flex flex-row mt-12">
         <div className="w-[50%] px-6 flex flex-col">
           <input
             type="file"
@@ -87,6 +87,8 @@ const FileIntegrityChecker = () => {
           </button>
           {file1 && (
             <div className="mt-6">
+              <h3 className="font-extrabold text-2xl">Upload Details</h3>
+
               <p className="text-lg">
                 <b>File Name:</b> {file1.name}
               </p>
@@ -95,7 +97,7 @@ const FileIntegrityChecker = () => {
               </p>
               <p className="text-md">
                 {sha3Value1 ? (
-                  sha3Value1
+                  <p className="hash-output text-sm">{sha3Value1}</p>
                 ) : (
                   <div className="flex flex-row items-center">
                     <CgSpinner
@@ -129,6 +131,7 @@ const FileIntegrityChecker = () => {
           </button>
           {file2 && (
             <div className="mt-6">
+              <h3 className="font-extrabold text-2xl">Upload Details</h3>
               <p className="text-lg">
                 <b>File Name:</b> {file2.name}
               </p>
@@ -137,7 +140,7 @@ const FileIntegrityChecker = () => {
               </p>
               <p className="text-md">
                 {sha3Value2 ? (
-                  sha3Value2
+                  <p className="hash-output text-sm">{sha3Value2}</p>
                 ) : (
                   <div className="flex flex-row items-center">
                     <CgSpinner
