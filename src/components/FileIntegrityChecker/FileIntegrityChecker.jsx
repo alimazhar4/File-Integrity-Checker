@@ -105,7 +105,7 @@ const FileIntegrityChecker = () => {
                 Upload Details
               </h3>
 
-              <p className="text-lg">
+              <p className="text-lg break-words">
                 <b>File Name:</b> {file1.name}
               </p>
               <p className="text-lg">
@@ -153,7 +153,7 @@ const FileIntegrityChecker = () => {
               <h3 className="font-extrabold text-2xl text-center my-2">
                 Upload Details
               </h3>
-              <p className="text-lg">
+              <p className="text-lg break-words">
                 <b>File Name:</b> {file2.name}
               </p>
               <p className="text-lg">
