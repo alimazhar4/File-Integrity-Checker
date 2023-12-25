@@ -5,18 +5,17 @@ import { ethers } from "ethers";
 
 import FileIntegrityChecker from "@/components/FileIntegrityChecker/FileIntegrityChecker";
 
-import { FaGithub } from "react-icons/fa";
-import { FaWallet } from "react-icons/fa";
+import { FaGithub, FaFileSignature, FaWallet } from "react-icons/fa";
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState("");
   const [signature, setSignature] = useState("");
 
   async function requestAccount() {
-    console.log("Requesting account...");
+    // console.log("Requesting account...");
 
     if (window.ethereum) {
-      console.log("detected");
+      // console.log("detected");
 
       try {
         const accounts = await window.ethereum.request({
@@ -27,7 +26,9 @@ export default function Home() {
         console.log("Error connecting...");
       }
     } else {
-      alert("Meta Mask not detected");
+      alert(
+        "\nEVM Wallet not detected! You need one to use this app.\n\nKindly make sure your web3 wallet browser extensions are active\nOr download one like Metamask if you don't have any."
+      );
     }
   }
 
@@ -38,9 +39,9 @@ export default function Home() {
       const message = `Sign this message to prove ownership of ${walletAddress}`;
       const signature = await signer.signMessage(message);
       setSignature(signature);
-      console.log("try block passed");
     } catch (error) {
       console.error("Error signing message:", error);
+      alert(`\nError Code: ${error.code} \n${error.message}`);
     }
   }
 
@@ -91,7 +92,7 @@ export default function Home() {
                   onClick={signMessage}
                   className=" mt-4 flex flex-row mx-auto justify-center items-center bg-gradient-to-br from-[#00D8FF] to-[#008CFF] text-white rounded-lg px-4 py-2 border-black hover:from-[#008CFF] hover:to-[#008CFF] transition duration-300"
                 >
-                  <FaWallet size={20} />
+                  <FaFileSignature size={20} />
                   <span className="ml-2">Sign Signature</span>
                 </button>
               ) : (
