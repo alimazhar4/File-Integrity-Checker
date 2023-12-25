@@ -1,6 +1,9 @@
 # File Integrity Checker
 Check the integrity between two files by easily uploading them. 
 The app will compare both of the files to check if their contents exactly match with each other using SHA3 hashing.
+
+### Live Demo: <a href="https://file-integrity-checker.vercel.app/" target="_blank">https://file-integrity-checker.vercel.app/</a>
+
 <p align="center"><img src="https://github.com/alimazhar4/File-Integrity-Checker/assets/59063759/26277794-e9b0-4714-a43f-396cfc50dc6b" width=100%>
 
 ## Tech Stack Used
