@@ -1,9 +1,35 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
+import { ethers } from "ethers";
+
 import FileIntegrityChecker from "@/components/FileIntegrityChecker/FileIntegrityChecker";
 
 import { FaGithub } from "react-icons/fa";
+import { FaWallet } from "react-icons/fa";
 
 export default function Home() {
+  const [walletAddress, setWalletAddress] = useState("");
+
+  async function requestAccount() {
+    console.log("Requesting account...");
+
+    if (window.ethereum) {
+      console.log("detected");
+
+      try {
+        const accounts = await window.ethereum.request({
+          method: "eth_requestAccounts",
+        });
+        setWalletAddress(accounts[0]);
+      } catch (error) {
+        console.log("Error connecting...");
+      }
+    } else {
+      alert("Meta Mask not detected");
+    }
+  }
+
   return (
     <main className="flex flex-col">
       <div className=" flex justify-center bg-gradient-to-br from-[#00ccFF] to-[#008CFF] hover:from-[#008CFF] hover:to-[#008CFF] text-white text-sm text-center py-2 px-8">
@@ -24,10 +50,32 @@ export default function Home() {
         <p className="font-semibold px-[10%] md:px-[20%] text-xl text-center mt-4">
           Check the integrity between two files
           <br />
-          Just upload both of them below and easily compare their SHA3 hash
-          values
+          Just upload both of them below and easily find out if their content
+          differs
         </p>
-        <FileIntegrityChecker />
+        {!walletAddress ? (
+          <div className="mt-10 flex flex-col justify-center text-center">
+            <p className="text-xl my-2">Connect Your Web3 Wallet to Continue</p>
+
+            <button
+              onClick={requestAccount}
+              className=" flex flex-row mx-auto justify-center items-center bg-gradient-to-br from-[#00D8FF] to-[#008CFF] text-white rounded-lg px-4 py-2 border-black hover:from-[#008CFF] hover:to-[#008CFF] transition duration-300"
+            >
+              <FaWallet size={20} />
+              <span className="ml-2">Connect Wallet</span>
+            </button>
+          </div>
+        ) : (
+          <div className="flex flex-col">
+            <div className="flex flex-col mx-auto mt-10 text-center">
+              <h3 className="text-2xl font-bold bg-gradient-to-br from-[#00D8FF] to-[#008CFF] inline-block text-transparent bg-clip-text">
+                Connected Wallet
+              </h3>
+              <p>{walletAddress}</p>
+            </div>
+            <FileIntegrityChecker walletAddress={walletAddress} />
+          </div>
+        )}
       </div>
     </main>
   );

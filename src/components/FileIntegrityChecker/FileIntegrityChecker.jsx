@@ -8,7 +8,7 @@ import HashCompare from "./HashCompare";
 import { FaFileArrowUp } from "react-icons/fa6";
 import { CgSpinner } from "react-icons/cg";
 
-const FileIntegrityChecker = () => {
+const FileIntegrityChecker = ({ walletAddress }) => {
   const router = useRouter();
 
   const file1InputRef = useRef(null);
@@ -37,7 +37,7 @@ const FileIntegrityChecker = () => {
       reader.onload = (event) => {
         const fileContent = event.target.result;
         const sha3 = SHA3(fileContent, { outputLength: 256 }).toString();
-        setSha3Value1(sha3);
+        setSha3Value1(sha3 + walletAddress);
         setFile1Size(formatFileSize(selectedFile.size));
       };
       reader.readAsBinaryString(selectedFile);
@@ -54,7 +54,7 @@ const FileIntegrityChecker = () => {
       reader.onload = (event) => {
         const fileContent = event.target.result;
         const sha3 = SHA3(fileContent, { outputLength: 256 }).toString();
-        setSha3Value2(sha3);
+        setSha3Value2(sha3 + walletAddress);
         setFile2Size(formatFileSize(selectedFile.size));
       };
       reader.readAsBinaryString(selectedFile);
