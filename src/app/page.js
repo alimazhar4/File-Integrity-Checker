@@ -10,6 +10,7 @@ import { FaWallet } from "react-icons/fa";
 
 export default function Home() {
   const [walletAddress, setWalletAddress] = useState("");
+  const [signature, setSignature] = useState("");
 
   async function requestAccount() {
     console.log("Requesting account...");
@@ -27,6 +28,19 @@ export default function Home() {
       }
     } else {
       alert("Meta Mask not detected");
+    }
+  }
+
+  async function signMessage() {
+    try {
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const message = `Sign this message to prove ownership of ${walletAddress}`;
+      const signature = await signer.signMessage(message);
+      setSignature(signature);
+      console.log("try block passed");
+    } catch (error) {
+      console.error("Error signing message:", error);
     }
   }
 
@@ -55,7 +69,7 @@ export default function Home() {
         </p>
         {!walletAddress ? (
           <div className="mt-10 flex flex-col justify-center text-center">
-            <p className="text-xl my-2">Connect Your Web3 Wallet to Continue</p>
+            <p className="text-lg my-2">Connect Your Web3 Wallet to Continue</p>
 
             <button
               onClick={requestAccount}
@@ -66,14 +80,24 @@ export default function Home() {
             </button>
           </div>
         ) : (
-          <div className="flex flex-col">
-            <div className="flex flex-col mx-auto mt-10 text-center">
+          <div className="flex flex-col w-full">
+            <div className="flex flex-col mt-10 text-center">
               <h3 className="text-2xl font-bold bg-gradient-to-br from-[#00D8FF] to-[#008CFF] inline-block text-transparent bg-clip-text">
                 Connected Wallet
               </h3>
               <p>{walletAddress}</p>
+              {!signature ? (
+                <button
+                  onClick={signMessage}
+                  className=" mt-4 flex flex-row mx-auto justify-center items-center bg-gradient-to-br from-[#00D8FF] to-[#008CFF] text-white rounded-lg px-4 py-2 border-black hover:from-[#008CFF] hover:to-[#008CFF] transition duration-300"
+                >
+                  <FaWallet size={20} />
+                  <span className="ml-2">Sign Signature</span>
+                </button>
+              ) : (
+                <FileIntegrityChecker walletAddress={walletAddress} />
+              )}
             </div>
-            <FileIntegrityChecker walletAddress={walletAddress} />
           </div>
         )}
       </div>

@@ -82,7 +82,7 @@ const FileIntegrityChecker = ({ walletAddress }) => {
   };
 
   return (
-    <div>
+    <div className="w-full text-left">
       <div className="flex flex-col md:flex-row mt-6">
         <div className="w-full md:w-[50%] px-12 flex flex-col border-b-2 border-b-[#008CFF] md:border-b-0 md:border-r-2 md:border-r-[#008CFF] py-12 md:py-6">
           <input
